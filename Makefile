@@ -8,4 +8,7 @@ test:
 	@echo "... executing unit tests"
 	@bash ./shunit2-tests.sh
 
-.PHONY: check test
+clean:
+	rm -rf blacklist blacklist-debcache
+
+.PHONY: check test clean
