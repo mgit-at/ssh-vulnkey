@@ -38,10 +38,6 @@ testFailsWhenKeyFileDoesNotExist() {
 
     fixture_=('a=(1 $ne_ $ne_ $e_)' 'a=(1 $ne_ $e_ $ne_)' 'a=(1 $e_ $ne_ $ne_)' 'a=(0 $e_ $e_ $e_)')
     for i in "${fixture_[@]}"; do
-        unset a
-        unset ret_expected_
-        unset argstring_
-
         eval $i
         _testFailsWhenKeyFileDoesNotExist ${a[@]}
     done
