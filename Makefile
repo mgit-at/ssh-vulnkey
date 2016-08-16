@@ -6,6 +6,6 @@ check:
 
 test:
 	@echo "... executing unit tests"
-	@bash shunit2-tests.sh
+	@bash ./shunit2-tests.sh
 
 .PHONY: check test

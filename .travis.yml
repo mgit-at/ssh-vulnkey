@@ -8,4 +8,4 @@ addons:
         - openssh-blacklist
         - openssh-blacklist-extra
 
-script: make
+script: bash ./shunit2-tests.sh
