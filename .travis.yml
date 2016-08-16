@@ -4,7 +4,6 @@ addons:
     apt:
         packages:
         - shunit2
-        - shellcheck
         - openssh-client
         - openssh-blacklist
         - openssh-blacklist-extra
