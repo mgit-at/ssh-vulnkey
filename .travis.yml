@@ -5,7 +5,5 @@ addons:
         packages:
         - shunit2
         - openssh-client
-        - openssh-blacklist
-        - openssh-blacklist-extra
 
 script: bash ./shunit2-tests.sh
