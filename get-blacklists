@@ -1,0 +1,50 @@
+#!/bin/bash
+
+set -e
+set -x
+
+mkdir -p blacklist
+mkdir -p blacklist-debcache
+
+DEBS=( \
+    "23ae3c6e6906d79919983132985f3cbe6b266ecf457e427e91bb23f36165cdb0 http://mirrors.kernel.org/ubuntu/pool/main/o/openssh-blacklist/openssh-blacklist_0.4.1_all.deb" \
+    "06bdc7e7cc6776e0f8dc8d19f1a8269ee1cd7fa4e1b97dd36222d594d230a7cb http://mirrors.kernel.org/ubuntu/pool/main/o/openssh-blacklist/openssh-blacklist-extra_0.4.1_all.deb" \
+)
+
+# download
+(
+cd blacklist-debcache
+rm -f sha256sums
+for i in "${DEBS[@]}"; do
+    hash_=${i% *}
+    url_=${i#* }
+    file_=${url_##*/}
+
+    echo "$hash_  $file_" >${file_}.sha256
+    echo "$hash_  $file_" >>sha256sums
+    if ! sha256sum -c ${file_}.sha256; then
+        curl -s $url_ >${file_}.unchecked
+        out_=$(sha256sum ${file_}.unchecked |head -n1)
+        newhash_=${out_%% *}
+        if [[ $hash_ != $newhash_ ]]; then
+            echo "Checksum error downloading $url_ expected=$hash_ got=$newhash_"
+            rm ${file_}.unchecked
+            exit 1
+        else
+            mv -f ${file_}.unchecked ${file_}
+        fi
+    fi
+done
+
+# for safety
+sha256sum -c sha256sums || exit 1
+)
+
+# extract
+for i in "${DEBS[@]}"; do
+    hash_=${i% *}
+    url_=${i#* }
+    file_=${url_##*/}
+
+    dpkg-deb -x blacklist-debcache/$file_ blacklist
+done

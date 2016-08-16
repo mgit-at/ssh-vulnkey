@@ -6,4 +6,9 @@ addons:
         - shunit2
         - openssh-client
 
+cache:
+    directories:
+    - blacklist-debcache
+
+before_script: ./get-blacklists
 script: bash ./shunit2-tests.sh
