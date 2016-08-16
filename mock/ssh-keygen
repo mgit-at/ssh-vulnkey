@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [[ $TEST_PRINT_VULNERABLE_KEY == "1" ]]; then
+    # 42fe9c8bc77059a6119d
+    fp_="AA:AA:AA:AA:AA:AA:42:fe:9c:8b:c7:70:59:a6:11:9d"
+    echo "2048 $fp_ fixtures/id_rsa.pub (RSA)"
+    exit 0
+fi
+
+# original path stored from shunit2-tests.sh:setUp()
+PATH=$TEST_ORIGINAL_PATH
+
+exec ssh-keygen "$@"

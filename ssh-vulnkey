@@ -1,0 +1,46 @@
+#!/bin/bash
+
+BLACKLISTS_="/usr/share/ssh/blacklist.RSA-"
+RET_=0
+
+check_fp() {
+    file_="$1"
+    out_=$(ssh-keygen -l -f "$file_")
+    ret_=$?
+    if [[ $ret_ != 0 ]]; then
+        echo "ERROR: parsing ${file_} with ssh-keygen" >&2
+        RET_=1
+        return
+    fi
+
+    # split on whitespace and convert to array
+    outa_=($out_)
+
+    # get data from array
+    BITS_=${outa_[0]}
+    FP_=${outa_[1]}
+    #CMT_=${outa_[2]}
+    #TYPE_=${outa_[3])
+
+    # convert fingerprint to data required for blacklist
+    #   remove colons and remove the first 12 characters
+    FP_HEX_=${FP_//:/}
+    FP_HEX_SHORT_=${FP_HEX_:12}
+
+    if grep -q $FP_HEX_SHORT_ ${BLACKLISTS_}$BITS_; then
+        # we have a match AND thus a vulnerable key
+        echo "$file_ IS VULNERABLE - $FP_HEX_SHORT_" >&2
+        RET_=1
+    else
+        # we have no match
+        #echo $BITS_ $FP_ $CMT_ >&2
+        echo >/dev/null
+    fi
+}
+
+while (( $# != 0 )); do
+    check_fp "$1"
+    shift
+done
+
+exit $RET_
