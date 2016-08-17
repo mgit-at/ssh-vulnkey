@@ -5,13 +5,7 @@ addons:
         packages:
         - shunit2
         - openssh-client
+        - openssh-blacklist
+        - openssh-blacklist-extra
 
-cache:
-    directories:
-    - blacklist-debcache
-
-env:
-    - BLACKLISTS_=./blacklist/usr/share/ssh/blacklist.
-
-before_script: ./get-blacklists
 script: bash ./shunit2-tests.sh
