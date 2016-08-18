@@ -68,28 +68,28 @@ testFailsWhenKeyFileDoesNotExist() {
 testBlackBoxVulnerableKeyRSA1024() {
     out_=$(TEST_PRINT_VULNERABLE_KEY=RSA1024 $t_ mocked_in_vulnerable_key 2>&1)
     ret_=$?
-    assertEquals "mocked_in_vulnerable_key IS VULNERABLE - 42fe2d91b99460c84ea0" "$out_"
+    assertEquals "AA:AA:AA:AA:AA:AA:42:fe:2d:91:b9:94:60:c8:4e:a0 mocked_in_vulnerable_key IS VULNERABLE" "$out_"
     assertEquals "$t_ must return an error on vulnerable keys - " 1 "$ret_"
 }
 
 testBlackBoxVulnerableKeyRSA2048() {
     out_=$(TEST_PRINT_VULNERABLE_KEY=RSA2048 $t_ mocked_in_vulnerable_key 2>&1)
     ret_=$?
-    assertEquals "mocked_in_vulnerable_key IS VULNERABLE - 42fe9c8bc77059a6119d" "$out_"
+    assertEquals "AA:AA:AA:AA:AA:AA:42:fe:9c:8b:c7:70:59:a6:11:9d mocked_in_vulnerable_key IS VULNERABLE" "$out_"
     assertEquals "$t_ must return an error on vulnerable keys - " 1 "$ret_"
 }
 
 testBlackBoxVulnerableKeyRSA4096() {
     out_=$(TEST_PRINT_VULNERABLE_KEY=RSA4096 $t_ mocked_in_vulnerable_key 2>&1)
     ret_=$?
-    assertEquals "mocked_in_vulnerable_key IS VULNERABLE - 42fef88961f38cff0f96" "$out_"
+    assertEquals "AA:AA:AA:AA:AA:AA:42:fe:f8:89:61:f3:8c:ff:0f:96 mocked_in_vulnerable_key IS VULNERABLE" "$out_"
     assertEquals "$t_ must return an error on vulnerable keys - " 1 "$ret_"
 }
 
 testBlackBoxVulnerableKeyDSA1024() {
     out_=$(TEST_PRINT_VULNERABLE_KEY=DSA1024 $t_ mocked_in_vulnerable_key 2>&1)
     ret_=$?
-    assertEquals "mocked_in_vulnerable_key IS VULNERABLE - 42fe51b48d0339c7d8fd" "$out_"
+    assertEquals "AA:AA:AA:AA:AA:AA:42:fe:51:b4:8d:03:39:c7:d8:fd mocked_in_vulnerable_key IS VULNERABLE" "$out_"
     assertEquals "$t_ must return an error on vulnerable keys - " 1 "$ret_"
 }
 
