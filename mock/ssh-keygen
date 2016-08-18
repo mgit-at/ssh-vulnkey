@@ -1,9 +1,16 @@
 #!/bin/bash
 
-if [[ $TEST_PRINT_VULNERABLE_KEY == "1" ]]; then
-    # 42fe9c8bc77059a6119d
-    fp_="AA:AA:AA:AA:AA:AA:42:fe:9c:8b:c7:70:59:a6:11:9d"
-    echo "2048 $fp_ fixtures/id_rsa.pub (RSA)"
+case "$TEST_PRINT_VULNERABLE_KEY" in
+    RSA1024) # 42fe2d91b99460c84ea0
+        echo "1024 AA:AA:AA:AA:AA:AA:42:fe:2d:91:b9:94:60:c8:4e:a0 fixtures/nonexistend_rsa1024.pub (RSA)" ;;
+    RSA2048) # 42fe9c8bc77059a6119d
+        echo "2048 AA:AA:AA:AA:AA:AA:42:fe:9c:8b:c7:70:59:a6:11:9d fixtures/nonexistend_rsa2048.pub (RSA)" ;;
+    RSA4096) # 42fef88961f38cff0f96
+        echo "4096 AA:AA:AA:AA:AA:AA:42:fe:f8:89:61:f3:8c:ff:0f:96 fixtures/nonexistend_rsa4096.pub (RSA)" ;;
+    DSA1024) # 42fe51b48d0339c7d8fd
+        echo "1024 AA:AA:AA:AA:AA:AA:42:fe:51:b4:8d:03:39:c7:d8:fd fixtures/nonexistend_dsa1024.pub (DSA)" ;;
+esac
+if [[ $TEST_PRINT_VULNERABLE_KEY != "" ]]; then
     exit 0
 fi
 
