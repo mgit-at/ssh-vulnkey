@@ -21,6 +21,17 @@ testBasicFunctionality() {
     assertEquals 0 $ret_
 }
 
+testStrangeKeySizes() {
+    for i in 1023 2047; do
+        ssh-keygen -t rsa -b $i -C user@host -N "" -f $SHUNIT_TMPDIR/id_rsa${i}.pub >/dev/null
+        ret_=$?
+        assertEquals "problem creating test input keys rsa $i bits" 0 $ret_
+        $t_ $SHUNIT_TMPDIR/id_rsa${i}.pub 2>/dev/null
+        ret_=$?
+        assertEquals 0 $ret_
+    done
+}
+
 _testFailsWhenKeyFileDoesNotExist() {
     local orig_args_="$@"
     local ret_expected_=$1
