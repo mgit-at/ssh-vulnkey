@@ -1,11 +1,24 @@
 #!/bin/bash
 
 t_="./ssh-vulnkey"
-ne_="./fixtures/nonexistend"
+
+# prefixed by SHUNIT_TMPDIR
+e_="id_rsa.pub"
+ne_="nonexistend.pub"
 
 
-setUp()
-{
+oneTimeSetUp() {
+    # prefix variables because SHUNIT_TMPDIR is empty before shunit2 is sourced at the end of this file
+    e_="$SHUNIT_TMPDIR/$e_"
+    ne_="$SHUNIT_TMPDIR/$ne_"
+
+    # create one working key to test with
+    ssh-keygen -t rsa -b 1024 -C user@host -N "" -f $e_ >/dev/null
+    ret_=$?
+    assertEquals "problem creating test input keys for rsa 1024 bit" 0 $ret_
+}
+
+setUp() {
     export TEST_ORIGINAL_PATH=$PATH
     PATH=$PWD:$PWD/mock:$PATH
 }
@@ -16,7 +29,7 @@ tearDown()
 }
 
 testBasicFunctionality() {
-    $t_ ./fixtures/id_rsa.pub
+    $t_ $e_
     ret_=$?
     assertEquals 0 $ret_
 }
@@ -43,8 +56,6 @@ _testFailsWhenKeyFileDoesNotExist() {
 }
 
 testFailsWhenKeyFileDoesNotExist() {
-    ne_=./fixtures/nonexistend
-    e_=./fixtures/id_rsa.pub
     [ -e $ne_ ] && fail "file $ne_ must not exist"
 
     fixture_=('a=(1 $ne_ $ne_ $e_)' 'a=(1 $ne_ $e_ $ne_)' 'a=(1 $e_ $ne_ $ne_)' 'a=(0 $e_ $e_ $e_)')
