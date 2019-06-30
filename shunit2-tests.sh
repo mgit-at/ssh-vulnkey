@@ -35,7 +35,7 @@ testBasicFunctionality() {
 }
 
 testStrangeKeySizes() {
-    for i in 1023 2047; do
+    for i in 1025 2047; do
         ssh-keygen -t rsa -b $i -C user@host -N "" -f $SHUNIT_TMPDIR/id_rsa${i}.pub >/dev/null
         ret_=$?
         assertEquals "problem creating test input keys rsa $i bits" 0 $ret_
