@@ -14,7 +14,11 @@ check_fp() {
     fi
 
     # split on whitespace and convert to array
-    outa_=($out_)
+    set -f
+    # just WTF..., shell is really a useless pice of sh*t, don't use, really!!
+    # shellcheck disable=SC2206
+    IFS=" " outa_=($out_)
+    set +f
 
     # get data from array
     BITS_=${outa_[0]}
@@ -31,14 +35,14 @@ check_fp() {
     #   (RSA) -> RSA
     TYPE_=${TYPE_:1:-1}
 
-    if grep -q $FP_HEX_SHORT_ "${BLACKLISTS_}${TYPE_}-$BITS_"; then
+    if grep -q "$FP_HEX_SHORT_" "${BLACKLISTS_}${TYPE_}-$BITS_"; then
         # we have a match AND thus a vulnerable key
         echo "$FP_ $file_ IS VULNERABLE"
         RET_=1
     else
         # we have no match
         #echo $BITS_ $FP_ $CMT_ >&2
-        echo >/dev/null
+        :
     fi
 }
 
