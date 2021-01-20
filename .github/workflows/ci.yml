@@ -4,8 +4,9 @@ name: CI
 
 # Controls when the action will run. 
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
+  # don't trigger 2 times for a pull request
   push:
+    branches: master
   pull_request:
 
   # Allows you to run this workflow manually from the Actions tab
