@@ -1,6 +1,6 @@
 # ssh-vulnkey
 
-[![Build Status](https://travis-ci.org/mgit-at/ssh-vulnkey.svg?branch=master)](https://travis-ci.org/mgit-at/ssh-vulnkey)
+![Build Status](https://github.com/mgit-at/ssh-vulnkey/workflows/CI/badge.svg)
 [![License](https://img.shields.io/badge/license-APACHE2-blue.svg?style=flat)](https://raw.githubusercontent.com/mgit-at/ssh-vulnkey/master/LICENSE)
 
 
